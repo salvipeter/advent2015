@@ -1,15 +1,17 @@
-(defun look-say (list &optional n k)
-  (cond ((null list)
-         (if n (list k n) ()))
-        ((eq (car list) n)
-         (look-say (cdr list) n (1+ k)))
-        (n
-         (cons k (cons n (look-say (cdr list) (car list) 1))))
-        (t
-         (look-say (cdr list) (car list) 1))))
+;;; Tail-recursive solution (otherwise the stack overflows)
+(defun look-say (list)
+  (labels ((rec (list acc n k)
+             (cond ((null list)
+                    (if n (nreverse (cons n (cons k acc))) acc))
+                   ((eq (car list) n)
+                    (rec (cdr list) acc n (1+ k)))
+                   (n
+                    (rec (cdr list) (cons n (cons k acc)) (car list) 1))
+                   (t
+                    (rec (cdr list) acc (car list) 1)))))
+    (rec list () nil nil)))
 
-;;; Needs a large control stack, call with
-;;; $ sbcl --control-stack-size 1000
+;;; n = 40 for part 1, n = 50 for part 2
 (defun adv10 (number-list n)
   (loop repeat (1+ n)
         for list = number-list then (look-say list)
