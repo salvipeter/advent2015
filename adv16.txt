@@ -1,0 +1,6 @@
+Trivially solved by a series of Emacs commands like
+
+  M-x delete-matching-lines RET goldfish: [^5]
+
+In the second part, first eliminate based on the exact information;
+then a manual search gives the answer.
