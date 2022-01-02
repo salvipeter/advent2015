@@ -1,15 +1,15 @@
 (defun v+ (&rest u)
-  (apply #'mapcar #'+ u))
+  (apply 'mapcar '+ u))
 
 (defun v* (u &rest scale)
-  (mapcar (lambda (x) (apply #'* x scale)) u))
+  (mapcar (lambda (x) (apply '* x scale)) u))
 
 (defun score (ingredients amounts)
-  (let* ((multiplied (mapcar #'v* (mapcar #'cdr ingredients) amounts))
+  (let* ((multiplied (mapcar 'v* (mapcar 'cdr ingredients) amounts))
          (summed (mapcar (lambda (x)
                            (max x 0))
-                         (reduce #'v+ multiplied))))
-    (reduce #'* (butlast summed))))
+                         (reduce 'v+ multiplied))))
+    (reduce '* (butlast summed))))
 
 (defun sums (n k)
   "All lists of K elements that sum up to N."
@@ -26,12 +26,12 @@
         maximizing (score ingredients amounts)))
 
 (defun score2 (ingredients amounts)
-  (let* ((multiplied (mapcar #'v* (mapcar #'cdr ingredients) amounts))
+  (let* ((multiplied (mapcar 'v* (mapcar 'cdr ingredients) amounts))
          (summed (mapcar (lambda (x)
                            (max x 0))
-                         (reduce #'v+ multiplied))))
+                         (reduce 'v+ multiplied))))
     (if (= (fifth summed) 500)
-        (reduce #'* (butlast summed))
+        (reduce '* (butlast summed))
         0)))
 
 (defun adv15b (ingredients)
